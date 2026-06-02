@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 
 /**
  * Utilidades criptográficas reutilizables para el cifrado y descifrado de archivos.
@@ -46,7 +47,17 @@ public final class CryptoUtils {
      */
     public static final int SALT_SIZE = 16;
 
-    private static final int IV_SIZE = 16;
+    /**
+     * Tamaño del vector de inicialización (IV) en bytes.
+     */
+    public static final int IV_SIZE = 16;
+
+    /**
+     * Tamaño del hash SHA-256 en bytes.
+     * Centralizado aquí para que nadie tenga que hardcodear 32 en FileDecryptor.
+     */
+    public static final int HASH_SIZE = 32;
+
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private CryptoUtils() {
@@ -55,11 +66,16 @@ public final class CryptoUtils {
 
     /**
      * Deriva una clave AES de 256 bits a partir de una contraseña y un salt.
-     * @param password contraseña proporcionada por el usuario.
-     * @param salt salt aleatorio que se usa para reforzar la derivación.
+     *
+     * @param password contraseña proporcionada por el usuario. Se usa char[] en lugar de
+     *                 String porque los String son inmutables en Java y permanecen en
+     *                 memoria hasta que el GC los recolecta; con char[] se puede limpiar
+     *                 el contenido de forma explícita con Arrays.fill(password, '\0').
+     * @param salt     salt aleatorio que se usa para reforzar la derivación. Asegura que
+     *                 la misma contraseña produzca claves distintas en cada cifrado.
      * @return clave secreta AES lista para usarse en cifrado o descifrado.
      * @throws IllegalArgumentException si la contraseña o el salt son nulos o vacíos.
-     * @throws IllegalStateException si no se puede generar la clave con el algoritmo indicado.
+     * @throws IllegalStateException si ocurre un error durante la derivación de la clave.
      */
     public static SecretKeySpec deriveKey(char[] password, byte[] salt) {
         if (password == null || password.length == 0) {
@@ -87,17 +103,18 @@ public final class CryptoUtils {
                 );
             }
 
-            return new SecretKeySpec(encoded, ALGORITHM);
+            SecretKeySpec result = new SecretKeySpec(encoded, ALGORITHM);
+
+            // Se limpian los bytes de la clave derivada una vez copiados al SecretKeySpec,
+            // para reducir el tiempo que el material sensible permanece en memoria.
+            Arrays.fill(encoded, (byte) 0);
+
+            return result;
 
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-
-            throw new IllegalStateException(
-                    "Error al derivar la clave AES.",
-                    ex
-            );
+            throw new IllegalStateException("Error al derivar la clave AES: " + ex.getMessage(), ex);
 
         } finally {
-
             // Se limpia la contraseña almacenada internamente para reducir
             // el tiempo que permanece en memoria.
             keySpec.clearPassword();
@@ -105,7 +122,8 @@ public final class CryptoUtils {
     }
 
     /**
-     * Genera un salt aleatorio de 16 bytes.
+     * Genera un salt aleatorio de {@value SALT_SIZE} bytes.
+     *
      * @return arreglo de bytes con salt criptográficamente seguro.
      */
     public static byte[] generateSalt() {
@@ -115,7 +133,10 @@ public final class CryptoUtils {
     }
 
     /**
-     * Genera un vector de inicialización de 16 bytes para AES en modo CBC.
+     * Genera un vector de inicialización de {@value IV_SIZE} bytes para AES en modo CBC.
+     * El IV debe ser único por cada cifrado; por eso se genera con SecureRandom y nunca
+     * se fija en un valor constante.
+     *
      * @return arreglo de bytes con un IV aleatorio.
      */
     public static byte[] generateIV() {
@@ -129,9 +150,9 @@ public final class CryptoUtils {
      * El hash se utiliza posteriormente para verificar que el contenido no fue alterado.
      *
      * @param data datos de entrada sobre los que se calculará el resumen.
-     * @return arreglo con el hash SHA-256 de 32 bytes.
+     * @return arreglo con el hash SHA-256 de {@value HASH_SIZE} bytes.
      * @throws IllegalArgumentException si los datos son nulos.
-     * @throws IllegalStateException si no está disponible SHA-256.
+     * @throws IllegalStateException si SHA-256 no está disponible en el entorno.
      */
     public static byte[] computeSHA256(byte[] data) {
         if (data == null) {
@@ -151,7 +172,7 @@ public final class CryptoUtils {
      * Se transforma el arreglo a hexadecimal para que pueda visualizarse fácilmente en consola
      * o almacenarse en un formato legible.
      *
-     * @param bytes arreglo de bytes a convertir.
+     * @param bytes arreglo de bytes a convertir. Un arreglo vacío produce una cadena vacía.
      * @return cadena hexadecimal en minúsculas.
      * @throws IllegalArgumentException si el arreglo es nulo.
      */
@@ -160,12 +181,16 @@ public final class CryptoUtils {
             throw new IllegalArgumentException("El arreglo de bytes no puede ser nulo.");
         }
 
+        if (bytes.length == 0) {
+            return "";
+        }
+
         char[] hexChars = new char[bytes.length * 2];
         final char[] hexAlphabet = "0123456789abcdef".toCharArray();
 
         for (int i = 0; i < bytes.length; i++) {
             int value = bytes[i] & 0xFF;
-            hexChars[i * 2] = hexAlphabet[value >>> 4];
+            hexChars[i * 2]     = hexAlphabet[value >>> 4];
             hexChars[i * 2 + 1] = hexAlphabet[value & 0x0F];
         }
 
