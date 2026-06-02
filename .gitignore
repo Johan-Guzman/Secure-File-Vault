@@ -1,0 +1,40 @@
+# Compilados Java
+*.class
+
+# Archivos empaquetados
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/
+build/
+
+# Archivos cifrados generados por el proyecto
+*.enc
+
+# Archivos de prueba temporales
+test-output/
+temp/
+
+# Logs
+*.log
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
