@@ -1,0 +1,89 @@
+hola, este es un file q voy a cifrar
+Puedes darle a Claude un prompt como este:
+
+---
+
+**PROMPT PARA CLAUDE**
+
+Voy a adjuntar 3 diapositivas de una materia llamada **Gerencia de Proyectos**. Necesito que actúes como un profesor universitario experto en gestión de proyectos y que transformes el contenido de las diapositivas en unos **apuntes completos de estudio para un parcial**.
+
+### Objetivo
+
+Crear un documento tipo Word con explicaciones detalladas, organizadas y fáciles de estudiar, ampliando la información cuando sea necesario para comprender completamente los conceptos.
+
+### Instrucciones de formato
+
+Organiza el contenido utilizando la siguiente estructura:
+
+# Título del tema
+
+## 1. Conceptos principales
+
+* Definiciones claras.
+* Explicación de cada término importante.
+* Diferencias entre conceptos relacionados.
+
+## 2. Explicación detallada
+
+* Desarrollo completo del tema.
+* Ejemplos prácticos.
+* Casos de uso cuando aplique.
+
+## 3. Fórmulas y cálculos
+
+Para cada fórmula:
+
+* Nombre de la fórmula.
+* Fórmula matemática escrita correctamente.
+* Significado de cada variable.
+* Cuándo se utiliza.
+* Ejemplo resuelto paso a paso.
+* Interpretación del resultado.
+
+## 4. Procedimientos o metodologías
+
+Si existe algún proceso:
+
+1. Paso 1
+2. Paso 2
+3. Paso 3
+4. Paso n
+
+Explica qué ocurre en cada paso.
+
+## 5. Tablas resumen
+
+Crear tablas cuando ayuden a comparar conceptos.
+
+## 6. Posibles preguntas de examen
+
+* Preguntas teóricas.
+* Preguntas de análisis.
+* Preguntas de cálculo.
+* Preguntas tipo caso.
+
+## 7. Resumen para memorizar
+
+* Puntos clave.
+* Fórmulas importantes.
+* Conceptos que probablemente evalúen en el parcial.
+
+### Requisitos importantes
+
+* NO resumir excesivamente.
+* Explicar todo como si fuera material oficial de estudio para obtener la máxima nota.
+* Si una diapositiva menciona un concepto sin desarrollarlo, complétalo con conocimiento académico estándar de Gerencia de Proyectos.
+* Mantener rigor técnico y terminología profesional.
+* Utilizar viñetas, numeración, subtítulos y tablas para mejorar la lectura.
+* Resaltar conceptos críticos y fórmulas importantes.
+* Incluir ejemplos cuando ayuden a entender mejor.
+* Si aparecen métricas, indicadores, CPM, PERT, Valor Ganado (EVM), ruta crítica, costos, cronogramas, riesgos u otras herramientas de gestión de proyectos, explicarlas en profundidad.
+* Entregar el resultado en formato compatible con Word, utilizando encabezados jerárquicos y una estructura limpia.
+
+### Resultado esperado
+
+Genera unos apuntes completos que puedan reemplazar la necesidad de volver a revisar las diapositivas, con suficiente profundidad para preparar un examen universitario.
+
+---
+
+Adjuntaré las 3 diapositivas a continuación.

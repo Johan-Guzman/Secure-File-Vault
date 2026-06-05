@@ -38,3 +38,6 @@ temp/
 # Windows
 Thumbs.db
 desktop.ini
+
+.vscode
+.metals
