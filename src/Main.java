@@ -1,5 +1,6 @@
 import javax.crypto.spec.SecretKeySpec;
 
+
 public class Main {
 
     public static void main(String[] args) {
@@ -160,5 +161,29 @@ public class Main {
                         + CryptoUtils.bytesToHex(ejemplo)
         );
 
+        metodoPrueba();
     }
+
+
+    public static void metodoPrueba(){
+        try {
+
+            FileEncryptor.encryptFile(
+                    "encrypt/file.txt",
+                    "decrypt/test.enc",
+                    "123456".toCharArray()
+            );
+
+            System.out.println("Archivo cifrado correctamente.");
+
+        } catch (Exception e) {
+
+            System.err.println(
+                    "Error: " + e.getMessage()
+            );
+
+            e.printStackTrace();
+        }
+    }
+
 }
