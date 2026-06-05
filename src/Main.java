@@ -82,8 +82,7 @@ public class Main {
             } else {
                 System.out.println();
                 System.out.println("  Descifrando archivo...");
-                //Descomentar cuando se implemente FileDecryptor
-                //FileDecryptor.decryptFile(inputPath, outputPath, password);
+                FileDecryptor.decryptFile(inputPath, outputPath, password);
             }
 
         } catch (javax.crypto.BadPaddingException e) {

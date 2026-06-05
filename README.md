@@ -1,4 +1,4 @@
-# Secure File Vault v1.0
+# Secure File Vault
 Cifrador y descifrador de archivos con AES-256.
 
 ---
