@@ -69,3 +69,9 @@ El desarrollo de Secure File Vault nos permitió llevar a la práctica los conce
 También aprendimos que la seguridad va más allá del algoritmo: el manejo cuidadoso de la contraseña en memoria, el uso de comparaciones en tiempo constante y el cierre garantizado de recursos son decisiones de implementación que marcan la diferencia entre un programa seguro y uno que, aunque use AES-256, tenga vulnerabilidades prácticas.
 
 Consideramos que el objetivo del proyecto fue cumplido satisfactoriamente. El programa cifra y descifra archivos de cualquier tipo, verifica la integridad del contenido recuperado y maneja los errores de forma clara para el usuario final.
+
+## Realizado por:
+
+- Santiago Grajales Perez – A00402018
+- Johan Stiven Guzmán – A00401480
+- Adri Jhoanny Martinez Murillo – A00400842
