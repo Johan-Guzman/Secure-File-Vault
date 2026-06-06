@@ -133,3 +133,9 @@ chcp 65001
 javac *.java
 java Main
 ```
+
+## Realizado por:
+
+- Santiago Grajales Perez – A00402018
+- Johan Stiven Guzmán – A00401480
+- Adri Jhoanny Martinez Murillo – A00400842
